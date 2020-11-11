@@ -7,8 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-	function success(){
-		alert("<% out.print(session.getAttribute("name")); %>님 반갑습니다")		
+	function success(){		
+		<%if(session.getAttribute("name")==null) {%>
+			alert("로그인 먼저 진행하셔야 합니다")
+			location.href="login.jsp"
+		<%}else{%>			
+			alert("<% out.print(session.getAttribute("name")); %>님 반갑습니다")		
+		<%}%>
 	}
 	function logout(){
 		location.href = "logout.jsp";
@@ -28,7 +33,7 @@
 	<h1>회원들만의 페이지</h1>
 	<table border='1'>
 		<tr>
-			<th>이름</th><th>비밀번호</th><th>이름</th>
+			<th>아이디</th><th>비밀번호</th><th>이름</th>
 			<th>주소</th><th>전화번호</th>
 		</tr>
 		<%

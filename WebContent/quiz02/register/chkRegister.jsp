@@ -17,6 +17,7 @@
 			String n = (String)paraEnum.nextElement();
 			userId = request.getParameter("id");
 			userPw = request.getParameter("pwd");
+			System.out.print("pwd"+userPw);
 			name = request.getParameter("name");
 			addr = request.getParameter("addr");
 			tel = request.getParameter("tel"); 

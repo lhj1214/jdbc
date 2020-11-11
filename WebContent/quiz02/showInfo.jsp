@@ -6,8 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	function control(){		
+		<%if(session.getAttribute("name")==null) {%>
+			alert("로그인 먼저 진행하셔야 합니다")
+			location.href="login.jsp"
+		<%}%>
+	}
+</script>
 </head>
-<body>
+<body onload="control()">
 	<%			
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -29,7 +37,7 @@
 	<span>전화번호:</span><input type="text" name="tel" value="<% out.print(rs.getString("tel")); %>"><br>
 	<%} %>
 	<input type="submit" value="수정">
-	<input type="button" onclick="location.href='deleteInfo.jsp'" value="삭제">
 	</form>
+	<input type="button" onclick="location.href='deleteInfo.jsp'" value="삭제">
 </body>
 </html>
