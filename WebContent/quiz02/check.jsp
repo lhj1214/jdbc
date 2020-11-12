@@ -20,36 +20,30 @@
 	id = request.getParameter("id");
 	pwd = request.getParameter("pwd");
 	String sql = "select id, pwd, name from member where id='"+id+"'";
+	//id가 문자형(한글, 영어 등)이므로 '' 꼭 넣어줘야 함, 숫자는 안 붙여도 됨
 	System.out.println(id);
 	System.out.println(pwd);
 	PreparedStatement ps = con.prepareStatement(sql);
-	ResultSet rs = ps.executeQuery();
-	if(!rs.next()){%>
-		System.out.println("fail");
+	ResultSet rs = ps.executeQuery();//성공적으로 들오면 rs에 값이 들어옴
+	if(!rs.next()){//해당 아이디 없음
+			System.out.println("fail");%>
 		<script type="text/javascript">
 			alert("일치하는 아이디가 없습니다.")
-			location.href = "login.jsp";
+			location.href = "login.jsp";//jsp문법 response.sendRedirect를 사용하면 script보다 먼저 작용해서 alert 뜨지 않음
 		</script>
-	<%}else{
-	
-		System.out.println("rs");
-		out.print(rs.getString("id"));
-		if( id.equals(rs.getString("id")) && pwd.equals(rs.getString("pwd")) ){
+	<%}else{//해당 아이디 있음	
+		if( pwd.equals(rs.getString("pwd")) ){//DB를 통해 아이디 확인은 마쳤으므로 비밀번호만 확인하면 됨
 			session.setAttribute("id", rs.getString("id"));
 			session.setAttribute("name", rs.getString("name"));
 			response.sendRedirect("main.jsp"); %>
 			<% 
-		}else{%>
-			System.out.println("fail");
+		}else{//입력한 비밀번호와 등록된 비밀번호 다른 경우
+			System.out.println("fail");%>
 			<script type="text/javascript">
-				alert("일치하는 아이디가 없습니다.")
+				alert("비밀번호가 일치하지 않습니다.")
 				location.href = "login.jsp";
-			</script>
-			<%
-		}
-
-	}
-	%>
-	
+			</script>			
+		<%}
+	}%>	
 </body>
 </html>
